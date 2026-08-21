@@ -1,0 +1,13 @@
+{
+  "itemGroup.richtext": "Example Mod Tab",
+  "block.richtext.example_block": "Example Block",
+  "item.richtext.example_item": "Example Item",
+
+  "richtext.configuration.title": "Rich Text Configs",
+  "richtext.configuration.section.richtext.common.toml": "Rich Text Configs",
+  "richtext.configuration.section.richtext.common.toml.title": "Rich Text Configs",
+  "richtext.configuration.items": "Item List",
+  "richtext.configuration.logDirtBlock": "Log Dirt Block",
+  "richtext.configuration.magicNumberIntroduction": "Magic Number Text",
+  "richtext.configuration.magicNumber": "Magic Number"
+}

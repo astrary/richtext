@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "com.astrary.richtext.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ComponentMixin",
+    "ComponentSerializationMixin",
+    "StyleExtensionMixin",
+    "StyleMixin",
+    "StyleMixinAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "FontMixin",
+    "FontMixinAccessor",
+    "StringRenderOutputMixin"
+  ]
+}
