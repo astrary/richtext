@@ -6,8 +6,10 @@ import net.minecraft.world.phys.Vec2;
 public final class CharFxInstance {
     public TextColor color;
     public Vec2 offset;
-    private char chr;
-    private int positionInCurrentSequence;
+    public float scale;
+
+    private final char chr;
+    private final int positionInCurrentSequence;
 
     public CharFxInstance(
         TextColor color,
@@ -16,6 +18,10 @@ public final class CharFxInstance {
     ) {
         this.color = color;
         this.offset = Vec2.ZERO;
+        this.scale = 1.0f;
+
+        this.chr = chr;
+        this.positionInCurrentSequence = positionInCurrentSequence;
     }
 
     public char getCharacter() {
@@ -26,4 +32,7 @@ public final class CharFxInstance {
         return this.positionInCurrentSequence;
     }
 
+    public boolean isScaled() {
+        return this.scale != 1.0f;
+    }
 }

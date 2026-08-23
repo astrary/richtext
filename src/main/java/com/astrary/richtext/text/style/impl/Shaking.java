@@ -1,6 +1,7 @@
 package com.astrary.richtext.text.style.impl;
 
 import com.astrary.richtext.text.CharFxInstance;
+import com.astrary.richtext.util.ConversionUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -20,38 +21,19 @@ public record Shaking(float amplitudeX, float amplitudeY) implements RichStyle {
     public static final MapCodec<Shaking> MAP_CODEC = CODEC.fieldOf("shake");
     private static final Random rng = new Random();
 
-    public Shaking() {
-        this(1.0f, 1.0f);
-    }
-
     public static Shaking fromReader(XMLStreamReader reader) {
         var rawAmp = reader.getAttributeValue(null, "amp");
         var rawAmpX = reader.getAttributeValue(null, "ampX");
         var rawAmpY = reader.getAttributeValue(null, "ampY");
 
-        if (rawAmpX == null || rawAmpX.isEmpty()) {
-            rawAmpX = "1.0";
+        var ampX = ConversionUtil.toFloatOrDefault(rawAmpX);
+        var ampY = ConversionUtil.toFloatOrDefault(rawAmpY);
 
-            if (rawAmp != null && !rawAmp.isEmpty()) {
-                rawAmpX = rawAmp;
-            }
-        }
-        if (rawAmpY == null || rawAmpY.isEmpty()) {
-            rawAmpY = "1.0";
+        if (rawAmp != null && !rawAmp.isEmpty()) {
+            var amp = ConversionUtil.toFloatOrDefault(rawAmp);
 
-            if (rawAmp != null && !rawAmp.isEmpty()) {
-                rawAmpY = rawAmp;
-            }
-        }
-
-        float ampX;
-        float ampY;
-
-        try {
-            ampX = Float.parseFloat(rawAmpX);
-            ampY = Float.parseFloat(rawAmpY);
-        } catch (NumberFormatException ex) {
-            return getDefault();
+            ampX = amp;
+            ampY = amp;
         }
 
         if (ampX <= 0.0) {
