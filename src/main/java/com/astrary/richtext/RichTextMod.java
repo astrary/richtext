@@ -80,6 +80,9 @@ public class RichTextMod {
             player.sendSystemMessage(Component.literal(
                 "<wave>waving text</wave>"
             ));
+            player.sendSystemMessage(Component.literal(
+                "<shine color=\"#FF44EE\">shining text</shine>"
+            ));
 
             player.sendSystemMessage(Component.literal(
                 "<rainbow><u>rainbow</u> <u>text</u> <u>with</u> <u>underline</u></rainbow>"
@@ -93,7 +96,12 @@ public class RichTextMod {
             player.sendSystemMessage(Component.literal(
                 "<rainbow><pulse>rainbow pulsing text</pulse></rainbow>"
             ));
+            player.sendSystemMessage(Component.literal(
+                "<b><wave><gradient speed=\"3.5\" from=\"#3f2b96\" to=\"#a8c0ff\">waving gradient text</gradient></wave></b>"
+            ));
+
             player.sendSystemMessage(Component.empty());
+
             player.sendSystemMessage(Component.literal(
                 "<wave amp=\"0.25\"><color value=\"#C4E0E5\">Rare</color></wave>")
             );
@@ -101,7 +109,7 @@ public class RichTextMod {
                 "<b><wave amp=\"0.5\"><color value=\"#DA22FF\">Epic</color></wave></b>")
             );
             player.sendSystemMessage(Component.literal(
-                "<b><wave><gradient speed=\"3.5\" from=\"#F37335\" to=\"#FDC830\">Legendary</gradient></wave></b>"
+                "<b><wave><gradient speed=\"3.5\" from=\"#F37335\" to=\"#FDC830\"><shine color=\"#F2C94C\">Legendary</shine></gradient></wave></b>"
             ));
             player.sendSystemMessage(Component.literal(
                 "<b><wave amp=\"1.5\"><gradient speed=\"3.5\" from=\"#8E2DE2\" to=\"#4A00E0\">Mythic</gradient></wave></b>"

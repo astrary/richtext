@@ -53,12 +53,11 @@ public record Waving(float frequency, float amplitude, float speed) implements R
     @Override
     public CharFxInstance process(CharFxInstance fx) {
         var i = (float) fx.getCharacterPosition();
-        var speed = getTime() * this.speed;
         var loopLength = 5.0f;
 
         var waveLength = 1.0f;
         var offset = i * 0.1f * waveLength;
-        var t = (speed + offset) % loopLength / loopLength;
+        var t = (getTime() + offset) % loopLength / loopLength;
         var angle = (float) t * Math.TAU;
 
         var x = (float) Math.cos(angle * 2.0f * frequency) * 2.0f * amplitude;
@@ -67,5 +66,10 @@ public record Waving(float frequency, float amplitude, float speed) implements R
         fx.offset = fx.offset.add(new Vec2(x, y));
 
         return fx;
+    }
+
+    @Override
+    public double getTime() {
+        return RichStyle.super.getTime() * speed;
     }
 }

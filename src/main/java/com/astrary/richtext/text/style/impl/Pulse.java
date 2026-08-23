@@ -43,9 +43,14 @@ public record Pulse(float speed, float scale) implements RichStyle {
 
     @Override
     public CharFxInstance process(CharFxInstance fx) {
-        var scale = (float) Math.sin(getTime() * this.speed * 5.0f);
+        var scale = (float) Math.sin(getTime() * 5.0f);
         fx.scale = 1.0f + (scale * 0.15f * this.scale);
 
         return fx;
+    }
+
+    @Override
+    public double getTime() {
+        return RichStyle.super.getTime() * speed;
     }
 }

@@ -1,6 +1,7 @@
 package com.astrary.richtext.text.style.impl;
 
 import com.astrary.richtext.text.CharFxInstance;
+import com.astrary.richtext.util.ColorUtil;
 import com.astrary.richtext.util.ConversionUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -47,23 +48,6 @@ public record Gradient(TextColor from, TextColor to, float frequency, float spee
         return new Gradient(fromColor, toColor, frequency, speed);
     }
 
-    private static int lerpColor(int a, int b, float t) {
-        int aA = (a >>> 24) & 0xFF;
-        int aR = (a >>> 16) & 0xFF;
-        int aG = (a >>> 8) & 0xFF;
-        int aB = a & 0xFF;
-
-        int bA = (b >>> 24) & 0xFF;
-        int bR = (b >>> 16) & 0xFF;
-        int bG = (b >>> 8) & 0xFF;
-        int bB = b & 0xFF;
-
-        return ((int) (aA + (bA - aA) * t) << 24) |
-            ((int) (aR + (bR - aR) * t) << 16) |
-            ((int) (aG + (bG - aG) * t) << 8) |
-            (int) (aB + (bB - aB) * t);
-    }
-
     @Override
     public String type() {
         return TAG;
@@ -71,11 +55,16 @@ public record Gradient(TextColor from, TextColor to, float frequency, float spee
 
     @Override
     public CharFxInstance process(CharFxInstance fx) {
-        var t = Math.sin(getTime() * speed + fx.getCharacterPosition() * frequency) * 0.5 + 0.5;
+        var t = Math.sin(getTime() + fx.getCharacterPosition() * frequency) * 0.5 + 0.5;
 
-        var color = lerpColor(from.getValue(), to.getValue(), (float) t);
+        var color = ColorUtil.lerpColor(from.getValue(), to.getValue(), (float) t);
         fx.color = TextColor.fromRgb(color);
 
         return fx;
+    }
+
+    @Override
+    public double getTime() {
+        return RichStyle.super.getTime() * speed;
     }
 }

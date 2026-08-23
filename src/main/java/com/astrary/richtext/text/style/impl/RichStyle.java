@@ -10,7 +10,7 @@ import javax.xml.stream.XMLStreamReader;
 // TODO: particles
 // TODO: better shake: speed, lerp (vibration)
 
-public sealed interface RichStyle permits Bold, Color, Gradient, Italic, Obfuscated, Pulse, Rainbow, RandomColor, Shaking, Strikethrough, Underlined, Waving {
+public sealed interface RichStyle permits Bold, Color, Gradient, Italic, Obfuscated, Pulse, Rainbow, RandomColor, Shaking, Shine, Strikethrough, Underlined, Waving {
     Codec<RichStyle> CODEC =
         Codec.STRING.dispatch(
             "type",
@@ -28,6 +28,7 @@ public sealed interface RichStyle permits Bold, Color, Gradient, Italic, Obfusca
                 case Rainbow.TAG -> Rainbow.MAP_CODEC;
                 case Waving.TAG -> Waving.MAP_CODEC;
                 case Gradient.TAG -> Gradient.MAP_CODEC;
+                case Shine.TAG -> Shine.MAP_CODEC;
                 default -> throw new UnsupportedOperationException("unimplemented type: " + type);
             }
         );
@@ -35,7 +36,7 @@ public sealed interface RichStyle permits Bold, Color, Gradient, Italic, Obfusca
     static boolean isValidTag(String tag) {
         return switch (tag) {
             case Italic.TAG, Bold.TAG, Color.TAG, Strikethrough.TAG, Underlined.TAG, Obfuscated.TAG, RandomColor.TAG,
-                 Shaking.TAG, Pulse.TAG, Rainbow.TAG, Waving.TAG, Gradient.TAG -> true;
+                 Shaking.TAG, Pulse.TAG, Rainbow.TAG, Waving.TAG, Gradient.TAG, Shine.TAG -> true;
             default -> false;
         };
     }
@@ -56,6 +57,7 @@ public sealed interface RichStyle permits Bold, Color, Gradient, Italic, Obfusca
             case Rainbow.TAG -> Rainbow.fromReader(reader);
             case Waving.TAG -> Waving.fromReader(reader);
             case Gradient.TAG -> Gradient.fromReader(reader);
+            case Shine.TAG -> Shine.fromReader(reader);
             default -> throw new UnsupportedOperationException("unimplemented tag: " + tag);
         };
     }
