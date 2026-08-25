@@ -81,6 +81,8 @@ configurations {
 dependencies {
     implementation 'com.fasterxml.woodstox:woodstox-core:7.2.2'
     additionalRuntimeClasspath 'com.fasterxml.woodstox:woodstox-core:7.2.2'
+    jarJar 'com.fasterxml.woodstox:woodstox-core:7.2.2'
+    jarJar 'org.codehaus.woodstox:stax2-api:4.2.2'
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

@@ -2,10 +2,10 @@
   "richtext.configuration.title": "Rich Text Config",
   "richtext.configuration.section.richtext.common.toml": "Rich Text Config",
   "richtext.configuration.section.richtext.common.toml.title": "Rich Text Config",
-  "richtext.configuration.enabled": "Enabled",
-  "richtext.configuration.enabled.tooltip": "Replace Minecraft builtin formatter",
   "richtext.configuration.command_enabled": "Enable \"/richtext\" command",
   "richtext.configuration.command_enabled.tooltip": "Enables /richtext command (Requires restart)",
+  "richtext.configuration.vanilla_argument_formatting_enabled": "Vanilla argument formatting",
+  "richtext.configuration.vanilla_argument_formatting_enabled.tooltip": "Doesn't applies formatting on translatable text arguments",
 
   "test.richtext.msg0": "<b>bold text</b>",
   "test.richtext.msg1": "<i>italic text</i>",

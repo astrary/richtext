@@ -2,7 +2,13 @@
 
 Rich replacement for Minecraft text formatting
 
-<img width="527" height="318" alt="java_3T6gn1Blsi" src="https://github.com/user-attachments/assets/8dacec76-a115-4f0b-9cd3-928ba5e89ac4" />
+![preview](https://cdn.modrinth.com/data/cached_images/e4e5428b8bc4fd6ce74c4413b9cc0950adf0f91d.gif)
+
+## Basic Usage
+
+Think of tags as containers: just wrap your text inside a style tag.
+
+> `<b><rainbow>text goes here</rainbow></b>`
 
 ## Styles
 
@@ -23,17 +29,3 @@ Attributes definition: `name (type)`
 | Gradient      |     from (`color`), to (`color`), freq (`float`), speed (`float`)     | `<gradient speed="3.5" from="#3f2b96" to="#a8c0ff">gradient text</gradient>` |
 | Wave          |            freq (`float`), amp (`float`), speed (`float`)             | `<wave>waving text</wave>`                                                   |
 | Shine         | color (`color`), freq (`float`), threshold (`float`), speed (`float`) | `<shine color="#FF44EE">shining text</shine>`                                |
-
-## Combining styles
-
-#### Red shaking text
-> `<color value="#DD0000"><shake>red shaking text</shake></color>`
-
-#### Pulsing bold randomly colored text
-> `<pulse><b><rcolor>pulsing bold random color text</rcolor></b></pulse>`
-
-#### Rainbow pulsing text
-> `<rainbow><pulse>rainbow pulsing text</pulse></rainbow>`
-
-#### Waving gradient text
-> `<b><wave><gradient speed="3.5" from="#3f2b96" to="#a8c0ff">waving gradient text</gradient></wave></b>`
