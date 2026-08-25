@@ -2,7 +2,7 @@ package com.astrary.richtext.text;
 
 import com.astrary.richtext.ext.IStyleRichExtension;
 import com.astrary.richtext.text.style.StyleInstancer;
-import com.astrary.richtext.text.style.impl.RichStyle;
+import com.astrary.richtext.text.style.impl.*;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
@@ -24,7 +24,7 @@ public class RichTextBuilder {
     private ClickEvent clickEvent = null;
     private HoverEvent hoverEvent = null;
     private ResourceLocation font = null;
-    private List<RichStyle> richStyles = new ArrayList<>();
+    private final List<RichStyle> richStyles = new ArrayList<>();
 
     public RichTextBuilder() {
     }

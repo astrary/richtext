@@ -1,6 +1,5 @@
 package com.astrary.richtext.mixin;
 
-import com.astrary.richtext.ext.IStyleRichExtension;
 import com.astrary.richtext.text.RichTextBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
@@ -13,18 +12,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Random;
-
 @SuppressWarnings("DataFlowIssue")
 @Mixin(Style.class)
 public class StyleMixin {
-//    @Inject(method = "getColor", at = @At("RETURN"), cancellable = true)
-//    private void getColor(CallbackInfoReturnable<TextColor> cir) {
-//        if (((IStyleRichExtension) this).richtext$isRandomColor()) {
-//            cir.setReturnValue(TextColor.fromRgb(new Random().nextInt(0, 0xFFFFFF)));
-//        }
-//    }
-
     @Inject(method = "withColor(Lnet/minecraft/network/chat/TextColor;)Lnet/minecraft/network/chat/Style;", at = @At("RETURN"), cancellable = true)
     public void withColor(TextColor color, CallbackInfoReturnable<Style> cir) {
         var richStyle = RichTextBuilder.fromStyle((Style) (Object) this)

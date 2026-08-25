@@ -1,6 +1,5 @@
 package com.astrary.richtext.util;
 
-import com.astrary.richtext.text.style.impl.Color;
 import net.minecraft.network.chat.TextColor;
 
 public class ConversionUtil {

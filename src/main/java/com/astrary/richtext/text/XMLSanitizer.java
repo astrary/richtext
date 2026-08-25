@@ -2,20 +2,23 @@ package com.astrary.richtext.text;
 
 import com.astrary.richtext.text.style.impl.RichStyle;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class XMLSanitizer {
     private static final Pattern TAG_PATTERN = Pattern.compile("</?([a-zA-Z_][\\w\\-.]*)\\b[^>]*>");
 
-    public static String sanitize(String str) {
-        str = str.replace("&", "&amp;");
+    public static Optional<String> sanitize(String text) {
+        if (!checkValid(text)) return Optional.empty();
 
-        var matcher = TAG_PATTERN.matcher(str);
+        text = text.replace("&", "&amp;");
+
+        var matcher = TAG_PATTERN.matcher(text);
         var out = new StringBuilder();
         var end = 0;
 
         while (matcher.find()) {
-            out.append(str, end, matcher.start());
+            out.append(text, end, matcher.start());
             var tag = matcher.group(1);
 
             var group = matcher.group();
@@ -28,8 +31,14 @@ public class XMLSanitizer {
             end = matcher.end();
         }
 
-        out.append(str.substring(end));
+        out.append(text.substring(end));
 
-        return out.toString();
+        return Optional.of(out.toString());
+    }
+
+    public static boolean checkValid(String text) {
+        if ((text.contains("<") && !text.contains(">")) || (text.contains(">") && !text.contains("<")))
+            return false;
+        return !text.contains("<>");
     }
 }

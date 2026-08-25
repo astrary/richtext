@@ -9,7 +9,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.chat.TextColor;
 
 import javax.xml.stream.XMLStreamReader;
-import java.util.Random;
 
 public record Shine(float frequency, float threshold, TextColor flashColor, float speed) implements RichStyle {
     public static final String TAG = "shine";

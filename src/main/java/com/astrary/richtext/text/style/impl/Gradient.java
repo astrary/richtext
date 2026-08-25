@@ -9,7 +9,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.chat.TextColor;
 
 import javax.xml.stream.XMLStreamReader;
-import java.awt.Color;
 
 public record Gradient(TextColor from, TextColor to, float frequency, float speed) implements RichStyle {
     public static final String TAG = "gradient";

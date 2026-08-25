@@ -5,11 +5,9 @@ import com.astrary.richtext.util.ConversionUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.phys.Vec2;
 
 import javax.xml.stream.XMLStreamReader;
-import java.util.Random;
 
 public record Waving(float frequency, float amplitude, float speed) implements RichStyle {
     public static final String TAG = "wave";

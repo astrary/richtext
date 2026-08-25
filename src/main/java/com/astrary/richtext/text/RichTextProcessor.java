@@ -1,7 +1,7 @@
 package com.astrary.richtext.text;
 
-import com.astrary.richtext.text.style.impl.RichStyle;
 import com.astrary.richtext.text.style.TextStyler;
+import com.astrary.richtext.text.style.impl.RichStyle;
 import com.ctc.wstx.stax.WstxInputFactory;
 import com.mojang.datafixers.util.Pair;
 
@@ -10,11 +10,22 @@ import javax.xml.stream.XMLStreamException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 public class RichTextProcessor {
-    public static List<Pair<String, List<RichStyle>>> processString(String str) throws XMLStreamException {
-        var root = String.format("<root>%s</root>", XMLSanitizer.sanitize(str));
+    public static Optional<List<Pair<String, List<RichStyle>>>> processString(String text) {
+        var xml = XMLSanitizer.sanitize(text);
+        if (xml.isEmpty()) return Optional.empty();
+
+        try {
+            return processStringInternal(xml.get());
+        } catch (XMLStreamException e) {
+            return Optional.empty();
+        }
+    }
+
+    private static Optional<List<Pair<String, List<RichStyle>>>> processStringInternal(String text) throws XMLStreamException {
+        var root = String.format("<root>%s</root>", text);
 
         var factory = new WstxInputFactory();
         var reader = factory.createXMLStreamReader(new StringReader(root));
@@ -52,6 +63,6 @@ public class RichTextProcessor {
             }
         }
 
-        return collection;
+        return Optional.of(collection);
     }
 }

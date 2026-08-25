@@ -13,7 +13,7 @@ import java.util.List;
 @Mixin(Style.class)
 public class StyleExtensionMixin implements IStyleRichExtension {
     @Unique
-    private List<RichStyle> richtext$richStyles = new ArrayList<>();
+    private final List<RichStyle> richtext$richStyles = new ArrayList<>();
 
     @Override
     public List<RichStyle> richtext$getRichStyle() {

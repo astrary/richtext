@@ -2,9 +2,7 @@ package com.astrary.richtext.text.style.impl;
 
 import com.astrary.richtext.text.CharFxInstance;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.world.phys.Vec2;
 
 import java.util.Random;
 
