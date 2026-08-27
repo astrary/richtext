@@ -7,18 +7,27 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.network.chat.contents.TranslatableFormatException;
 import net.minecraft.util.Unit;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Mixin(TranslatableContents.class)
-public class TranslatableContentsMixin {
+public abstract class TranslatableContentsMixin {
+    @Shadow
+    @Final
+    private static Pattern FORMAT_PATTERN;
+
+    @Shadow
+    protected abstract FormattedText getArgument(int index);
+
     @Redirect(method = "visit(Lnet/minecraft/network/chat/FormattedText$StyledContentConsumer;Lnet/minecraft/network/chat/Style;)Ljava/util/Optional;", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/FormattedText;visit(Lnet/minecraft/network/chat/FormattedText$StyledContentConsumer;Lnet/minecraft/network/chat/Style;)Ljava/util/Optional;"))
     private <T> Optional<T> richVisit(FormattedText instance, FormattedText.StyledContentConsumer<T> consumer, Style style) {
         return instance.visit(new RichContentConsumer<>(consumer), style);
@@ -28,27 +37,37 @@ public class TranslatableContentsMixin {
     private ImmutableList<FormattedText> decomposeFix(ImmutableList.Builder<FormattedText> instance, @Local String translatedKey) {
         ImmutableList.Builder<FormattedText> newResult = ImmutableList.builder();
 
-        var splitTranslation = List.of(translatedKey.split("%s"));
-        var args = new ArrayList<>(
-            instance.build().stream()
-            .filter(x -> !splitTranslation.contains(x.getString()))
-            .toList()
-        );
-
         final int[] argIndex = {0};
         new RichContentConsumer<Unit>((style, text) -> {
+            var matcher = FORMAT_PATTERN.matcher(text);
             var lastIndex = 0;
-            var currentIndex = 0;
+            int currentEnd;
 
-            while ((currentIndex = text.indexOf("%s", lastIndex)) != -1) {
-                if (currentIndex > lastIndex) {
-                    var subText = text.substring(lastIndex, currentIndex).replace("%%", "%");
+            for (lastIndex = 0; matcher.find(lastIndex); lastIndex = currentEnd) {
+                int currentStart = matcher.start();
+                currentEnd = matcher.end();
+
+                if (currentStart > lastIndex) {
+                    var subText = text.substring(lastIndex, currentStart);
+                    if (subText.indexOf(37) != -1) {
+                        throw new IllegalArgumentException();
+                    }
 
                     newResult.add(FormattedText.of(subText, style));
                 }
 
-                if (argIndex[0] < args.size()) {
-                    var arg = args.get(argIndex[0]);
+                var fmtType = matcher.group(2);
+                var s1 = text.substring(currentStart, currentEnd);
+                if ("%".equals(fmtType) && "%%".equals(s1)) {
+                    newResult.add(FormattedText.of("%", style));
+                } else {
+                    if (!"s".equals(fmtType)) {
+                        throw new TranslatableFormatException(((TranslatableContents) (Object) this), "Unsupported format: '" + s1 + "'");
+                    }
+
+                    var rawArgIndex = matcher.group(1);
+                    var argumentIndex = rawArgIndex != null ? Integer.parseInt(rawArgIndex) - 1 : argIndex[0]++;
+                    var arg = this.getArgument(argumentIndex);
 
                     newResult.add(new FormattedText() {
                         @Override
@@ -63,17 +82,14 @@ public class TranslatableContentsMixin {
                             return arg.visit(consumer, newStyle);
                         }
                     });
-
-                    argIndex[0] += 1;
-                } else {
-                    newResult.add(FormattedText.of("%s", style));
                 }
-
-                lastIndex = currentIndex + 2;
             }
 
             if (lastIndex < text.length()) {
-                var subText = text.substring(lastIndex).replace("%%", "%");
+                var subText = text.substring(lastIndex);
+                if (subText.indexOf(37) != -1) {
+                    throw new IllegalArgumentException();
+                }
 
                 newResult.add(FormattedText.of(subText, style));
             }

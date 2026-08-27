@@ -16,7 +16,7 @@ public record RichContentConsumer<T>(FormattedText.StyledContentConsumer<T> defa
     public @NotNull Optional<T> accept(@NotNull Style mcStyle, @NotNull String text) {
         List<Pair<String, List<RichStyle>>> richText = RichTextProcessor.processString(text).orElse(null);
         if (richText == null) {
-            RichTextMod.LOGGER.warn("failed to process rich string: {}", text);
+            RichTextMod.LOGGER.trace("failed to process rich string: {}", text);
 
             return defaultConsumer.accept(mcStyle, text);
         }

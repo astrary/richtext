@@ -25,52 +25,52 @@ public class StyleMixin {
     @Shadow
     @Final
     @Nullable
-    private TextColor color;
+    TextColor color;
 
     @Shadow
     @Final
     @Nullable
-    private Boolean bold;
+    Boolean bold;
 
     @Shadow
     @Final
     @Nullable
-    private Boolean italic;
+    Boolean italic;
 
     @Shadow
     @Final
     @Nullable
-    private Boolean underlined;
+    Boolean underlined;
 
     @Shadow
     @Final
     @Nullable
-    private Boolean strikethrough;
+    Boolean strikethrough;
 
     @Shadow
     @Final
     @Nullable
-    private Boolean obfuscated;
+    Boolean obfuscated;
 
     @Shadow
     @Final
     @Nullable
-    private ClickEvent clickEvent;
+    ClickEvent clickEvent;
 
     @Shadow
     @Final
     @Nullable
-    private HoverEvent hoverEvent;
+    HoverEvent hoverEvent;
 
     @Shadow
     @Final
     @Nullable
-    private String insertion;
+    String insertion;
 
     @Shadow
     @Final
     @Nullable
-    private ResourceLocation font;
+    ResourceLocation font;
 
     @Inject(method = "withColor(Lnet/minecraft/network/chat/TextColor;)Lnet/minecraft/network/chat/Style;", at = @At("RETURN"), cancellable = true)
     public void withColor(TextColor color, CallbackInfoReturnable<Style> cir) {
